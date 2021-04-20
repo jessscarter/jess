@@ -1,10 +1,10 @@
-import Link from "next/link";
-import ReactMarkdown from "react-markdown/with-html";
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import style from "react-syntax-highlighter/dist/cjs/styles/prism/dracula";
+import Link from 'next/link';
+import ReactMarkdown from 'react-markdown/with-html';
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import style from 'react-syntax-highlighter/dist/cjs/styles/prism/dracula';
 
-import { Layout, Image, SEO, Bio } from "@components/common";
-import { getPostBySlug, getPostsSlugs } from "@utils/posts";
+import { Layout, Image, SEO, Bio } from '@components/common';
+import { getPostBySlug, getPostsSlugs } from '@utils/posts';
 
 export default function Post({ post, frontmatter, nextPost, previousPost }) {
   return (
@@ -25,7 +25,7 @@ export default function Post({ post, frontmatter, nextPost, previousPost }) {
           className="mb-4 prose lg:prose-lg dark:prose-dark"
           escapeHtml={false}
           source={post.content}
-          renderers={{ code: CodeBlock, image: MarkdownImage }}
+          renderers={{ code: CodeBlock, image: whichImage }}
         />
         <hr className="mt-4" />
         <footer>
@@ -35,7 +35,7 @@ export default function Post({ post, frontmatter, nextPost, previousPost }) {
 
       <nav className="flex flex-wrap justify-between mb-10">
         {previousPost ? (
-          <Link href={"/post/[slug]"} as={`/post/${previousPost.slug}`}>
+          <Link href={'/post/[slug]'} as={`/post/${previousPost.slug}`}>
             <a className="text-lg font-bold">
               ← {previousPost.frontmatter.title}
             </a>
@@ -44,7 +44,7 @@ export default function Post({ post, frontmatter, nextPost, previousPost }) {
           <div />
         )}
         {nextPost ? (
-          <Link href={"/post/[slug]"} as={`/post/${nextPost.slug}`}>
+          <Link href={'/post/[slug]'} as={`/post/${nextPost.slug}`}>
             <a className="text-lg font-bold">{nextPost.frontmatter.title} →</a>
           </Link>
         ) : (
@@ -86,6 +86,14 @@ const CodeBlock = ({ language, value }) => {
   );
 };
 
+const whichImage = ({ alt, src }) => {
+  if (src.includes('https:')) {
+    return LiveImage({ alt, src });
+  } else {
+    return MarkdownImage({ alt, src });
+  }
+};
+
 const MarkdownImage = ({ alt, src }) => (
   <Image
     alt={alt}
@@ -95,3 +103,7 @@ const MarkdownImage = ({ alt, src }) => (
     className="w-full"
   />
 );
+
+const LiveImage = ({ alt, src }) => {
+  return <img src={src} alt={alt} />;
+};
