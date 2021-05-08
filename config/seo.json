@@ -1,0 +1,15 @@
+{
+  "siteMetadata": {
+    "title": "Jessica Carter",
+    "author": {
+      "name": "Jessica Carter",
+      "summary": "who is a Full Time Developer and writes about tech and life"
+    },
+    "description": "A blog created with Next.js and Tailwind.css",
+    "siteUrl": "https://jesssica.tech",
+    "language": "en-US",
+    "social": {
+      "twitter": "jesss_codes"
+    }
+  }
+}
